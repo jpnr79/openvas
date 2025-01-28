@@ -62,7 +62,7 @@ class PluginOpenvasConfig extends CommonDBTM {
       return __("GLPi openvas Connector", 'openvas');
    }
 
-   public function showForm() {
+   public function showForm($ID, array $options = []) {
       $this->getFromDB(1);
 
       echo "<div class='center'>";
@@ -223,7 +223,7 @@ class PluginOpenvasConfig extends CommonDBTM {
             `openvas_omp_path` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
             `retention_delay` int(11) NOT NULL DEFAULT '0',
             `search_max_days` int(11) NOT NULL DEFAULT '0',
-            `openvas_results_last_sync` datetime DEFAULT NULL,
+            `openvas_results_last_sync` timestamp DEFAULT NULL,
             `severity_medium_color` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
             `severity_low_color` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
             `severity_high_color` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
@@ -232,7 +232,7 @@ class PluginOpenvasConfig extends CommonDBTM {
             KEY `openvas_host` (`openvas_host`),
             KEY `openvas_results_last_sync` (`openvas_results_last_sync`)
          ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-         $DB->query($query) or die ($DB->error());
+         $DB->doQuery($query) or die ($DB->error());
 
          $tmp = [ 'id'                    => 1,
                   'fusioninventory_url'   => 'localhost',
@@ -255,6 +255,6 @@ class PluginOpenvasConfig extends CommonDBTM {
 
    public static function uninstall() {
       global $DB;
-      $DB->query("DROP TABLE IF EXISTS `glpi_plugin_openvas_configs`");
+      $DB->doQuery("DROP TABLE IF EXISTS `glpi_plugin_openvas_configs`");
    }
 }

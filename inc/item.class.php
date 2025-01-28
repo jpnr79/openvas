@@ -737,7 +737,7 @@ class PluginOpenvasItem extends CommonDBChild {
             KEY `date_creation` (`date_creation`),
             KEY `date_mod` (`date_mod`)
          ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-         $DB->query($query) or die ($DB->error());
+         $DB->doQuery($query) or die ($DB->error());
 
          //New installation : add default profile
          PluginOpenvasProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
@@ -756,6 +756,6 @@ class PluginOpenvasItem extends CommonDBChild {
 
    public static function uninstall() {
       global $DB;
-      $DB->query("DROP TABLE IF EXISTS `glpi_plugin_openvas_items`");
+      $DB->doQuery("DROP TABLE IF EXISTS `glpi_plugin_openvas_items`");
    }
 }
