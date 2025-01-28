@@ -41,7 +41,7 @@ define('PLUGIN_OPENVAS_VERSION', '1.2.0');
 // Minimal GLPI version, inclusive
 define('PLUGIN_OPENVAS_MIN_GLPI', '9.3');
 // Maximum GLPI version, exclusive
-define('PLUGIN_OPENVAS_MAX_GLPI', '9.4');
+define('PLUGIN_OPENVAS_MAX_GLPI', '12.4');
 
 /**
  * Init hooks of the plugin.
