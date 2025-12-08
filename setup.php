@@ -109,8 +109,8 @@ function plugin_version_openvas() {
       'homepage'       => 'https://github.com/pluginsglpi/openvas',
       'requirements'   => [
          'glpi' => [
-            'min' => PLUGIN_OPENVAS_MIN_GLPI,
-            'max' => PLUGIN_OPENVAS_MAX_GLPI,
+            'min' => '11.0',
+            'max' => '12.0',
          ]
       ]
    ];
