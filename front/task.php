@@ -36,7 +36,7 @@ Html::header(__("OpenVAS", "openvas"), $_SERVER['PHP_SELF'],
 
 Session::checkRight("plugin_openvas_task", READ);
 
-if ($_SESSION['glpirefresh_ticket_list'] > 0) {
+if (isset($_SESSION['glpirefresh_ticket_list']) && $_SESSION['glpirefresh_ticket_list'] > 0) {
    // Refresh automatique  sur tracking.php
    echo "<script type=\"text/javascript\">\n";
    echo "setInterval(\"window.location.reload()\",".

@@ -77,53 +77,52 @@ class PluginOpenvasConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1' align='center'>";
       echo "<td>" . __("Host", "openvas") . "</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, "openvas_host");
+      echo "<input type='text' name='openvas_host' value='" . htmlspecialchars($this->fields['openvas_host'] ?? '') . "' class='form-control'>";
       echo "</td>";
       echo "<td>" . __("Manager port", "openvas") . "</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, "openvas_port");
+      echo "<input type='text' name='openvas_port' value='" . htmlspecialchars($this->fields['openvas_port'] ?? '') . "' class='form-control'>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1' align='center'>";
       echo "<td>" . __("Path to omp", "openvas") . "</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, "openvas_omp_path");
+      echo "<input type='text' name='openvas_omp_path' value='" . htmlspecialchars($this->fields['openvas_omp_path'] ?? '') . "' class='form-control'>";
       echo "</td>";
       echo "<td>" . __("Console port", "openvas") . "</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, "openvas_console_port");
-      echo "</td>";
+      echo "<input type='text' name='openvas_console_port' value='" . htmlspecialchars($this->fields['openvas_console_port'] ?? '') . "' class='form-control'>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1' align='center'>";
       echo "<td>" . User::getTypeName(1) . "</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, "openvas_username");
+      echo "<input type='text' name='openvas_username' value='" . htmlspecialchars($this->fields['openvas_username'] ?? '') . "' class='form-control'>";
       echo "</td>";
       echo "<td>" . __("Password") . "</td>";
-      echo "<td><input type='password' name='openvas_password' value='".$this->fields['openvas_password']."'>";
+      echo "<td><input type='password' name='openvas_password' value='" . htmlspecialchars(isset($this->fields['openvas_password']) ? $this->fields['openvas_password'] : '') . "' class='form-control'>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1' align='center'>";
       echo "<td>" . __("Target retention delay", "openvas") . "</td>";
       echo "<td>";
-      Dropdown::showNumber("retention_delay", ['value' => $this->fields['retention_delay'],
-      'unit' => _n('Day', 'Days', $this->fields['retention_delay'])]);
+      Dropdown::showNumber("retention_delay", ['value' => $this->fields['retention_delay'] ?? 0,
+      'unit' => _n('Day', 'Days', $this->fields['retention_delay'] ?? 0)]);
       echo "</td>";
       echo "<td>" . __("Number of days for searches", "openvas") . "</td>";
       echo "<td>";
-      Dropdown::showNumber("search_max_days", ['value' => $this->fields['search_max_days'],
-      'unit' => _n('Day', 'Days', $this->fields['search_max_days'])]);
+      Dropdown::showNumber("search_max_days", ['value' => $this->fields['search_max_days'] ?? 0,
+      'unit' => _n('Day', 'Days', $this->fields['search_max_days'] ?? 0)]);
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1' align='center'>";
       echo "<td>".RequestType::getTypeName(1)."</td>";
       echo "<td>";
-      Dropdown::show('RequestType', [ 'name' => 'requesttypes_id',  'value' => $this->fields['requesttypes_id']]);
+      Dropdown::show('RequestType', [ 'name' => 'requesttypes_id',  'value' => $this->fields['requesttypes_id'] ?? 0]);
       echo "</td><td colspan='2'></td>";
       echo "</tr>";
 
@@ -133,22 +132,22 @@ class PluginOpenvasConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1' align='center'>";
       echo "<td>" . _x('priority', 'High') . "</td>";
       echo "<td>";
-      Html::showColorField('severity_high_color', ['value' => $this->fields["severity_high_color"]]);
+      Html::showColorField('severity_high_color', ['value' => $this->fields["severity_high_color"] ?? '']);
       echo "</td>";
       echo "<td>" . _x('priority', 'Medium') . "</td>";
       echo "<td>";
-      Html::showColorField('severity_medium_color', ['value' => $this->fields["severity_medium_color"]]);
+      Html::showColorField('severity_medium_color', ['value' => $this->fields["severity_medium_color"] ?? '']);
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1' align='center'>";
       echo "<td>" . _x('priority', 'Low') . "</td>";
       echo "<td>";
-      Html::showColorField('severity_low_color', ['value' => $this->fields["severity_low_color"]]);
+      Html::showColorField('severity_low_color', ['value' => $this->fields["severity_low_color"] ?? '']);
       echo "</td>";
       echo "<td>" . __("None") . "</td>";
       echo "<td>";
-      Html::showColorField('severity_none_color', ['value' => $this->fields["severity_none_color"]]);
+      Html::showColorField('severity_none_color', ['value' => $this->fields["severity_none_color"] ?? '']);
       echo "</tr>";
       echo "</td>";
 
@@ -190,6 +189,7 @@ class PluginOpenvasConfig extends CommonDBTM {
    public static function install(Migration $migration) {
       global $DB;
 
+      $requesttypes_id = 0;
       if (!countElementsInTable('glpi_requesttypes', ['name' => 'OpenVAS'])) {
          $requesttype = new RequestType();
          $requesttypes_id = $requesttype->add(['name'         => 'OpenVAS',
@@ -197,11 +197,9 @@ class PluginOpenvasConfig extends CommonDBTM {
          'is_recursive' => 1]);
       } else {
          $iterator = $DB->request('glpi_requesttypes', ['name' => 'OpenVAS']);
-         if ($iterator->numrows()) {
-            $data = $iterator->next();
+         foreach ($iterator as $data) {
             $requesttypes_id = $data['id'];
-         } else {
-            $requesttypes_id = 0;
+            break;
          }
       }
 
@@ -213,29 +211,29 @@ class PluginOpenvasConfig extends CommonDBTM {
 
          //Install
          $query = "CREATE TABLE `glpi_plugin_openvas_configs` (
-            `id` int(11) NOT NULL auto_increment,
-            `openvas_host` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            `openvas_port` int(11) NOT NULL DEFAULT '0',
-            `openvas_console_port` int(11) NOT NULL DEFAULT '0',
-            `requesttypes_id` int(11) NOT NULL DEFAULT '0',
-            `openvas_username` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            `openvas_password` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            `openvas_omp_path` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            `retention_delay` int(11) NOT NULL DEFAULT '0',
-            `search_max_days` int(11) NOT NULL DEFAULT '0',
-            `openvas_results_last_sync` timestamp DEFAULT NULL,
-            `severity_medium_color` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            `severity_low_color` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            `severity_high_color` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            `severity_none_color` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            PRIMARY KEY  (`id`),
+            `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            `openvas_host` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'localhost',
+            `openvas_port` INT(11) UNSIGNED NOT NULL DEFAULT '9390',
+            `openvas_console_port` INT(11) UNSIGNED NOT NULL DEFAULT '9392',
+            `requesttypes_id` BIGINT UNSIGNED NOT NULL DEFAULT '0',
+            `openvas_username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'admin',
+            `openvas_password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+            `openvas_omp_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '/usr/bin/omp',
+            `retention_delay` INT(11) UNSIGNED NOT NULL DEFAULT '30',
+            `search_max_days` INT(11) UNSIGNED NOT NULL DEFAULT '10',
+            `openvas_results_last_sync` TIMESTAMP NULL DEFAULT NULL,
+            `severity_medium_color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '#ffb800',
+            `severity_low_color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '#3c9fb4',
+            `severity_high_color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '#ff0000',
+            `severity_none_color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '#000000',
+            PRIMARY KEY (`id`),
             KEY `openvas_host` (`openvas_host`),
             KEY `openvas_results_last_sync` (`openvas_results_last_sync`)
-         ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
          $DB->doQuery($query) or die ($DB->error());
 
          $tmp = [ 'id'                    => 1,
-                  'fusioninventory_url'   => 'localhost',
+                  'openvas_host'          => 'localhost',
                   'openvas_port'          => '9390',
                   'openvas_console_port'  => '9392',
                   'openvas_username'      => 'admin',

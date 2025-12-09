@@ -348,4 +348,31 @@ class PluginOpenvasTask extends CommonDBTM {
 
    }
 
+   //----------------- Install & uninstall -------------------//
+   public static function install(Migration $migration) {
+      global $DB;
+
+      if (!$DB->tableExists("glpi_plugin_openvas_tasks")) {
+         $migration->displayMessage("Install glpi_plugin_openvas_tasks");
+
+         $query = "CREATE TABLE `glpi_plugin_openvas_tasks` (
+            `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+            `openvas_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+            `openvas_task_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+            `date_mod` TIMESTAMP NULL DEFAULT NULL,
+            `date_creation` TIMESTAMP NULL DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `openvas_id` (`openvas_id`),
+            KEY `date_mod` (`date_mod`)
+         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+         $DB->doQuery($query) or die ($DB->error());
+      }
+   }
+
+   public static function uninstall() {
+      global $DB;
+      $DB->doQuery("DROP TABLE IF EXISTS `glpi_plugin_openvas_tasks`");
+   }
+
 }

@@ -712,19 +712,19 @@ class PluginOpenvasItem extends CommonDBChild {
 
          //Install
          $query = "CREATE TABLE `glpi_plugin_openvas_items` (
-            `id` int(11) NOT NULL auto_increment,
-            `name` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            `itemtype` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            `items_id` int(11) NOT NULL DEFAULT '0',
-            `openvas_id` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            `openvas_name` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            `openvas_host` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            `openvas_comment` text COLLATE utf8_unicode_ci,
-            `openvas_severity` float(11) NOT NULL DEFAULT '-1',
-            `openvas_threat` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            `openvas_date_last_scan` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,
-            `date_creation` datetime DEFAULT NULL,
-            `date_mod` datetime DEFAULT NULL,
+            `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+            `itemtype` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+            `items_id` BIGINT UNSIGNED NOT NULL DEFAULT '0',
+            `openvas_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+            `openvas_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+            `openvas_host` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+            `openvas_comment` text COLLATE utf8mb4_unicode_ci,
+            `openvas_severity` float NOT NULL DEFAULT '-1',
+            `openvas_threat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+            `openvas_date_last_scan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+            `date_creation` TIMESTAMP NULL DEFAULT NULL,
+            `date_mod` TIMESTAMP NULL DEFAULT NULL,
             PRIMARY KEY  (`id`),
             KEY `name` (`name`),
             KEY `item` (`itemtype`,`items_id`),
@@ -736,7 +736,7 @@ class PluginOpenvasItem extends CommonDBChild {
             KEY `openvas_date_last_scan` (`openvas_date_last_scan`),
             KEY `date_creation` (`date_creation`),
             KEY `date_mod` (`date_mod`)
-         ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
          $DB->doQuery($query) or die ($DB->error());
 
          //New installation : add default profile

@@ -53,7 +53,7 @@ if (isset($_POST["update"])) {
    "tools", "PluginOpenvasMenu", "PluginOpenvasConfig");
 
    Session::checkRight("config", UPDATE);
-   $config->showForm();
+   $config->showForm(1);
 
    Html::footer();
 

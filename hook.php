@@ -193,12 +193,14 @@ function plugin_openvas_Status($param) {
 */
 function plugin_openvas_install() {
    $migration = new Migration(PLUGIN_OPENVAS_VERSION);
-   include (GLPI_ROOT."/plugins/openvas/inc/config.class.php");
-   include (GLPI_ROOT."/plugins/openvas/inc/vulnerability.class.php");
-   include (GLPI_ROOT."/plugins/openvas/inc/vulnerability_item.class.php");
-   include (GLPI_ROOT."/plugins/openvas/inc/item.class.php");
-   include (GLPI_ROOT."/plugins/openvas/inc/vulnerabilitycategory.class.php");
+   include_once (GLPI_ROOT."/plugins/openvas/inc/config.class.php");
+   include_once (GLPI_ROOT."/plugins/openvas/inc/task.class.php");
+   include_once (GLPI_ROOT."/plugins/openvas/inc/vulnerability.class.php");
+   include_once (GLPI_ROOT."/plugins/openvas/inc/vulnerability_item.class.php");
+   include_once (GLPI_ROOT."/plugins/openvas/inc/item.class.php");
+   include_once (GLPI_ROOT."/plugins/openvas/inc/vulnerabilitycategory.class.php");
    PluginopenvasConfig::install($migration);
+   PluginOpenvasTask::install($migration);
    PluginOpenvasVulnerability::install($migration);
    PluginOpenvasVulnerability_Item::install($migration);
    PluginOpenvasItem::install($migration);
@@ -213,12 +215,14 @@ function plugin_openvas_install() {
 */
 function plugin_openvas_uninstall() {
    $migration = new Migration(PLUGIN_OPENVAS_VERSION);
-   include (GLPI_ROOT."/plugins/openvas/inc/config.class.php");
-   include (GLPI_ROOT."/plugins/openvas/inc/vulnerability.class.php");
-   include (GLPI_ROOT."/plugins/openvas/inc/vulnerability_item.class.php");
-   include (GLPI_ROOT."/plugins/openvas/inc/item.class.php");
-   include (GLPI_ROOT."/plugins/openvas/inc/vulnerabilitycategory.class.php");
+   include_once (GLPI_ROOT."/plugins/openvas/inc/config.class.php");
+   include_once (GLPI_ROOT."/plugins/openvas/inc/task.class.php");
+   include_once (GLPI_ROOT."/plugins/openvas/inc/vulnerability.class.php");
+   include_once (GLPI_ROOT."/plugins/openvas/inc/vulnerability_item.class.php");
+   include_once (GLPI_ROOT."/plugins/openvas/inc/item.class.php");
+   include_once (GLPI_ROOT."/plugins/openvas/inc/vulnerabilitycategory.class.php");
    PluginopenvasConfig::uninstall($migration);
+   PluginOpenvasTask::uninstall($migration);
    PluginOpenvasVulnerability::uninstall($migration);
    PluginOpenvasVulnerability_Item::uninstall($migration);
    PluginOpenvasItem::uninstall($migration);

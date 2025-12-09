@@ -330,7 +330,7 @@ class PluginOpenvasOmp {
       $fp = @fsockopen($config->fields['openvas_host'],
       $config->fields['openvas_port'],
       $errCode, $errStr, 1);
-      if ($errCode == 0) {
+      if ($errCode == 0 && is_resource($fp)) {
          $result = true;
          fclose($fp);
       }
