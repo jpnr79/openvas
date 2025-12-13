@@ -1,0 +1,211 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to an undefined static method Html\:\:nullFooter\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: front/item.form.php
+
+		-
+			message: '#^Call to an undefined static method Session\:\:checkCentralAccess\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: front/rule.test.php
+
+		-
+			message: '#^Call to an undefined static method Session\:\:checkSeveralRightsOr\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: front/vulnerability.php
+
+		-
+			message: '#^Call to an undefined static method Search\:\:getOptions\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: hook.php
+
+		-
+			message: '#^Class PluginOpenvasConfig referenced with incorrect case\: PluginopenvasConfig\.$#'
+			identifier: class.nameCase
+			count: 2
+			path: hook.php
+
+		-
+			message: '#^Function plugin_openvas_searchOptionsValues\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: hook.php
+
+		-
+			message: '#^Call to an undefined static method Dropdown\:\:showNumber\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: inc/config.class.php
+
+		-
+			message: '#^Call to an undefined static method Html\:\:showColorField\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 4
+			path: inc/config.class.php
+
+		-
+			message: '#^Call to static method getTypeName\(\) on an unknown class RequestType\.$#'
+			identifier: class.notFound
+			count: 1
+			path: inc/config.class.php
+
+		-
+			message: '#^Instantiated class RequestType not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: inc/config.class.php
+
+		-
+			message: '#^Access to constant DONT_CHECK_ITEM_RIGHTS on an unknown class CommonDBConnexity\.$#'
+			identifier: class.notFound
+			count: 1
+			path: inc/item.class.php
+
+		-
+			message: '#^Access to constant MODE_EXTERNAL on an unknown class CronTask\.$#'
+			identifier: class.notFound
+			count: 2
+			path: inc/item.class.php
+
+		-
+			message: '#^Call to an undefined static method Toolbox\:\:addslashes_deep\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 3
+			path: inc/item.class.php
+
+		-
+			message: '#^Call to an undefined static method Toolbox\:\:logDebug\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: inc/item.class.php
+
+		-
+			message: '#^Call to static method Register\(\) on an unknown class CronTask\.$#'
+			identifier: class.notFound
+			count: 2
+			path: inc/item.class.php
+
+		-
+			message: '#^Instantiated class CronTask not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: inc/item.class.php
+
+		-
+			message: '#^Method PluginOpenvasItem\:\:showForItem\(\) should return nothing but return statement is missing\.$#'
+			identifier: return.missing
+			count: 2
+			path: inc/item.class.php
+
+		-
+			message: '#^Method PluginOpenvasItem\:\:updateHostFromLastReport\(\) should return nothing but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: inc/item.class.php
+
+		-
+			message: '#^Method PluginOpenvasItem\:\:updateTaskInfosForTarget\(\) should return nothing but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: inc/item.class.php
+
+		-
+			message: '#^Call to an undefined static method PluginOpenvasRuleVulnerabilityCollection\:\:getSearchURL\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: inc/menu.class.php
+
+		-
+			message: '#^Call to an undefined static method PluginOpenvasRuleVulnerabilityCollection\:\:getTypeName\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: inc/menu.class.php
+
+		-
+			message: '#^Call to an undefined static method Toolbox\:\:encodeInUtf8\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: inc/omp.class.php
+
+		-
+			message: '#^Call to an undefined static method Toolbox\:\:seems_utf8\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: inc/omp.class.php
+
+		-
+			message: '#^Method PluginOpenvasProfile\:\:showForm\(\) should return nothing but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: inc/profile.class.php
+
+		-
+			message: '#^Call to an undefined static method Html\:\:showDateField\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: inc/task.class.php
+
+		-
+			message: '#^Method PluginOpenvasTask\:\:showAddTaskForm\(\) should return nothing but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: inc/task.class.php
+
+		-
+			message: '#^Method PluginOpenvasTask\:\:showTasks\(\) should return nothing but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: inc/task.class.php
+
+		-
+			message: '#^Access to constant MODE_EXTERNAL on an unknown class CronTask\.$#'
+			identifier: class.notFound
+			count: 1
+			path: inc/vulnerability.class.php
+
+		-
+			message: '#^Call to an undefined static method Toolbox\:\:addslashes_deep\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 4
+			path: inc/vulnerability.class.php
+
+		-
+			message: '#^Call to static method Register\(\) on an unknown class CronTask\.$#'
+			identifier: class.notFound
+			count: 1
+			path: inc/vulnerability.class.php
+
+		-
+			message: '#^Instantiated class CronTask not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: inc/vulnerability.class.php
+
+		-
+			message: '#^Undefined variable\: \$value$#'
+			identifier: variable.undefined
+			count: 1
+			path: inc/vulnerability.class.php
+
+		-
+			message: '#^Call to an undefined static method Html\:\:printAjaxPager\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 4
+			path: inc/vulnerability_item.class.php
+
+		-
+			message: '#^Method PluginOpenvasVulnerability_Item\:\:showForItem\(\) should return nothing but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: inc/vulnerability_item.class.php
+
+		-
+			message: '#^Method PluginOpenvasVulnerability_Item\:\:showForVulnerability\(\) should return nothing but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: inc/vulnerability_item.class.php
