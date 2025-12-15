@@ -279,19 +279,19 @@ class PluginOpenvasOmp {
    $xml = false) {
 
       //Check if omp exists && is executable
-      if (!file_exists($config->fields['openvas_omp_path'] ?? '')
-      || !is_executable($config->fields['openvas_omp_path'] ?? '')
+      if (!file_exists((($config->fields['openvas_omp_path'] ?? '')))
+      || !is_executable((($config->fields['openvas_omp_path'] ?? '')))
       || !$this->ping($config)) {
          return false;
       }
 
       //Build the omp command line
       //By using the -X flag, we can send XML commands
-      $url = $config->fields['openvas_omp_path'] ?? ''." -h \""
-      .$config->fields['openvas_host'] ?? ''."\" -p "
-      .$config->fields['openvas_port'] ?? ''."  -u \""
-      .$config->fields['openvas_username'] ?? ''."\" -w \""
-      .$config->fields['openvas_password'] ?? ''."\" -X \"$command\"";
+      $url = (($config->fields['openvas_omp_path'] ?? ''))." -h \""
+      .(($config->fields['openvas_host'] ?? ''))."\" -p "
+      .(($config->fields['openvas_port'] ?? ''))."  -u \""
+      .(($config->fields['openvas_username'] ?? ''))."\" -w \""
+      .(($config->fields['openvas_password'] ?? ''))."\" -X \"$command\"";
 
       //Enable to display command sent to OpenVAS Manager
       //Toolbox::logDebug("Execute command : ".$url);
@@ -328,8 +328,8 @@ class PluginOpenvasOmp {
       $config  = PluginOpenvasConfig::getInstance();
       $errCode = $errStr = '';
       $result  = false;
-      $fp = @fsockopen($config->fields['openvas_host'] ?? '',
-      $config->fields['openvas_port'] ?? '',
+      $fp = @fsockopen((($config->fields['openvas_host'] ?? '')),
+      (($config->fields['openvas_port'] ?? '')),
       $errCode, $errStr, 1);
       if ($errCode == 0 && is_resource($fp)) {
          $result = true;

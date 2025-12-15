@@ -78,32 +78,32 @@ class PluginOpenvasConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1' align='center'>";
       echo "<td>" . __("Host", "openvas") . "</td>";
       echo "<td>";
-      echo "<input type='text' name='openvas_host' value='" . htmlspecialchars($this->fields['openvas_host'] ?? '') . "' class='form-control'>";
+      echo "<input type='text' name='openvas_host' value='" . htmlspecialchars((($this->fields['openvas_host'] ?? ''))) . "' class='form-control'>";
       echo "</td>";
       echo "<td>" . __("Manager port", "openvas") . "</td>";
       echo "<td>";
-      echo "<input type='text' name='openvas_port' value='" . htmlspecialchars($this->fields['openvas_port'] ?? '') . "' class='form-control'>";
+      echo "<input type='text' name='openvas_port' value='" . htmlspecialchars((($this->fields['openvas_port'] ?? ''))) . "' class='form-control'>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1' align='center'>";
       echo "<td>" . __("Path to omp", "openvas") . "</td>";
       echo "<td>";
-      echo "<input type='text' name='openvas_omp_path' value='" . htmlspecialchars($this->fields['openvas_omp_path'] ?? '') . "' class='form-control'>";
+      echo "<input type='text' name='openvas_omp_path' value='" . htmlspecialchars((($this->fields['openvas_omp_path'] ?? ''))) . "' class='form-control'>";
       echo "</td>";
       echo "<td>" . __("Console port", "openvas") . "</td>";
       echo "<td>";
-      echo "<input type='text' name='openvas_console_port' value='" . htmlspecialchars($this->fields['openvas_console_port'] ?? '') . "' class='form-control'>";
+      echo "<input type='text' name='openvas_console_port' value='" . htmlspecialchars((($this->fields['openvas_console_port'] ?? ''))) . "' class='form-control'>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1' align='center'>";
       echo "<td>" . User::getTypeName(1) . "</td>";
       echo "<td>";
-      echo "<input type='text' name='openvas_username' value='" . htmlspecialchars($this->fields['openvas_username'] ?? '') . "' class='form-control'>";
+      echo "<input type='text' name='openvas_username' value='" . htmlspecialchars((($this->fields['openvas_username'] ?? ''))) . "' class='form-control'>";
       echo "</td>";
       echo "<td>" . __("Password") . "</td>";
-      echo "<td><input type='password' name='openvas_password' value='" . htmlspecialchars(isset($this->fields['openvas_password']) ? $this->fields['openvas_password'] ?? '' : '') . "' class='form-control'>";
+      echo "<td><input type='password' name='openvas_password' value='" . htmlspecialchars(isset($this->fields['openvas_password']) ? (($this->fields['openvas_password'] ?? '')) : '') . "' class='form-control'>";
       echo "</td>";
       echo "</tr>";
 
@@ -173,8 +173,8 @@ class PluginOpenvasConfig extends CommonDBTM {
    public static function getConsoleURL() {
       $config = new self();
       $config->getFromDB(1);
-      return 'https://'.$config->fields['openvas_host'] ?? ''.':'
-      .$config->fields['openvas_console_port'] ?? ''.'/omp';
+      return 'https://'.(($config->fields['openvas_host'] ?? '')).':'
+      .(($config->fields['openvas_console_port'] ?? '')).'/omp';
    }
 
    /**

@@ -123,17 +123,17 @@ class PluginOpenvasToolbox {
       $color = false;
       switch ($threat) {
          case PluginOpenvasOmp::THREAT_HIGH:
-            $color = $config->fields['severity_high_color'] ?? '';
+            $color = (($config->fields['severity_high_color'] ?? ''));
             break;
          case PluginOpenvasOmp::THREAT_MEDIUM:
-            $color = $config->fields['severity_medium_color'] ?? '';
+            $color = (($config->fields['severity_medium_color'] ?? ''));
             break;
          case PluginOpenvasOmp::THREAT_LOW:
-            $color = $config->fields['severity_low_color'] ?? '';
+            $color = (($config->fields['severity_low_color'] ?? ''));
             break;
          case PluginOpenvasOmp::THREAT_ERROR:
          case PluginOpenvasOmp::THREAT_LOG:
-            $color = $config->fields['severity_none_color'] ?? '';
+            $color = (($config->fields['severity_none_color'] ?? ''));
             break;
       }
       return $color;
