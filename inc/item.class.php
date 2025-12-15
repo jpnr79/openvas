@@ -123,8 +123,8 @@ class PluginOpenvasItem extends CommonDBChild {
          $id = 0;
       }
 
-      $real_host = ($openvas_item->fields['openvas_id']
-      && $openvas_item->fields['openvas_id'] != NOT_AVAILABLE);
+      $real_host = ($openvas_item->fields['openvas_id'] ?? ''
+      && $openvas_item->fields['openvas_id'] ?? '' != NOT_AVAILABLE);
       $alive = PluginOpenvasOmp::ping();
 
       $form_url = $openvas_item->getFormURL().'?id='.$id.'&itemtype='
@@ -141,13 +141,13 @@ class PluginOpenvasItem extends CommonDBChild {
       echo "<td>" . __("Target", "openvas") . "</td>";
       echo "<td>";
       if ($alive && $item->canUpdate()) {
-         PluginOpenvasOmp::dropdownTargets('openvas_id', $openvas_item->fields['openvas_id']);
+         PluginOpenvasOmp::dropdownTargets('openvas_id', $openvas_item->fields['openvas_id'] ?? '');
       } else {
          echo __("Cannot contact OpenVAS", "openvas");
       }
-      if ($openvas_item->fields['openvas_id']) {
+      if ($openvas_item->fields['openvas_id'] ?? '') {
          $link = PluginOpenvasConfig::getConsoleURL();
-         $link.= "?cmd=get_target&target_id=".$openvas_item->fields['openvas_id'];
+         $link.= "?cmd=get_target&target_id=".$openvas_item->fields['openvas_id'] ?? '';
          echo "&nbsp;<a href='$link' target='_blank'>";
          echo "<img src='".$CFG_GLPI["root_doc"]."/pics/web.png' class='middle' alt=\""
          .__('View in OpenVAS', 'openvas')."\" title=\""
@@ -163,9 +163,9 @@ class PluginOpenvasItem extends CommonDBChild {
          }
          echo "</td>";
 
-         if ($openvas_item->fields['openvas_host']) {
+         if ($openvas_item->fields['openvas_host'] ?? '') {
             echo "<td>".__('Host', 'openvas')."</td>";
-            echo "<td>".$openvas_item->fields['openvas_host']."</td>";
+            echo "<td>".$openvas_item->fields['openvas_host'] ?? ''."</td>";
          } else {
             echo "<td colspan='3'></td>";
          }
@@ -179,7 +179,7 @@ class PluginOpenvasItem extends CommonDBChild {
 
       if ($real_host) {
 
-         $tasks = PluginOpenvasOmp::getTasksForATarget($openvas_item->fields['openvas_id']);
+         $tasks = PluginOpenvasOmp::getTasksForATarget($openvas_item->fields['openvas_id'] ?? '');
          if (is_array($tasks) && !empty($tasks)) {
             foreach ($tasks as $task_id => $task) {
                $tmp['openvas_severity']       = $task['severity'];
@@ -192,7 +192,7 @@ class PluginOpenvasItem extends CommonDBChild {
          echo "<form name='formtasks' method='post'
          action='$form_url&refresh' enctype=\"multipart/form-data\">";
 
-         echo "<input type='hidden' name='id' value='".$openvas_item->fields['id']."'>";
+         echo "<input type='hidden' name='id' value='".$openvas_item->fields['id'] ?? ''."'>";
 
          echo "<div class='spaced' id='tabsbody'>";
          echo "<table class='tab_cadre_fixe' id='taskformtable'>";
@@ -201,21 +201,21 @@ class PluginOpenvasItem extends CommonDBChild {
          echo "<tr class='tab_bg_1' align='center'>";
          echo "<td>" . __("Name") . "</td>";
          echo "<td>";
-         echo $openvas_item->fields['openvas_name'];
+         echo $openvas_item->fields['openvas_name'] ?? '';
          echo "</td>";
          echo "<td>" . __("Comments") . "</td>";
-         echo "<td>".$openvas_item->fields['openvas_comment']."</td>";
+         echo "<td>".$openvas_item->fields['openvas_comment'] ?? ''."</td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1' align='center'>";
          echo "<td>" . __("Severity", "openvas") . "</td>";
          echo "<td>";
-         echo PluginOpenvasToolbox::displayThreat($openvas_item->fields['openvas_threat'],
-         $openvas_item->fields['openvas_severity']);
+         echo PluginOpenvasToolbox::displayThreat($openvas_item->fields['openvas_threat'] ?? '',
+         $openvas_item->fields['openvas_severity'] ?? '');
          echo "</td>";
          echo "<td>" . __("Last run") . "</td>";
          echo "<td>";
-         echo Html::convDateTime($openvas_item->fields['openvas_date_last_scan']);
+         echo Html::convDateTime($openvas_item->fields['openvas_date_last_scan'] ?? '');
          echo "</td>";
          echo "</tr>";
 
@@ -223,8 +223,8 @@ class PluginOpenvasItem extends CommonDBChild {
 
          if ($alive
          && Session::haveRight('plugin_openvas_task', READ)
-         && $openvas_item->fields['openvas_id'] != NOT_AVAILABLE) {
-            $tasks = PluginOpenvasOmp::getTasksForATarget($openvas_item->fields['openvas_id']);
+         && $openvas_item->fields['openvas_id'] ?? '' != NOT_AVAILABLE) {
+            $tasks = PluginOpenvasOmp::getTasksForATarget($openvas_item->fields['openvas_id'] ?? '');
             if (is_array($tasks) && !empty($tasks)) {
                echo "<table class='tab_cadre_fixe' id='taskformtable'>";
                echo "<tr class='tab_bg_1' align='center'>";
@@ -322,7 +322,7 @@ class PluginOpenvasItem extends CommonDBChild {
       $item->getFromDB($openvas_line_id);
 
       //Get the target
-      $target = PluginOpenvasOmp::getOneTargetsDetail($item->fields['openvas_id']);
+      $target = PluginOpenvasOmp::getOneTargetsDetail($item->fields['openvas_id'] ?? '');
 
       //If no target, do not go further
       if (is_array($target) && !empty($target)) {
@@ -334,7 +334,7 @@ class PluginOpenvasItem extends CommonDBChild {
                 ];
          $tmp = Toolbox::addslashes_deep($tmp);
          $item->update($tmp);
-         self::updateTaskInfosForTarget($item->fields['openvas_id'], $openvas_line_id);
+         self::updateTaskInfosForTarget($item->fields['openvas_id'] ?? '', $openvas_line_id);
          return true;
       } else {
          return false;
@@ -438,7 +438,7 @@ class PluginOpenvasItem extends CommonDBChild {
       $index = 0;
 
       $config = PluginOpenvasConfig::getInstance();
-      $days   = $config->fields['search_max_days'];
+      $days   = $config->fields['search_max_days'] ?? '';
       $hosts  = [];
 
       //First step : request targets
@@ -625,7 +625,7 @@ class PluginOpenvasItem extends CommonDBChild {
 
       $item = new self();
       if ($item->getFromDBByID($itemtype, $items_id)) {
-         return PluginOpenvasToolbox::displayThreat($item->fields['openvas_threat']);
+         return PluginOpenvasToolbox::displayThreat($item->fields['openvas_threat'] ?? '');
       } else {
          return '';
       }
@@ -647,7 +647,7 @@ class PluginOpenvasItem extends CommonDBChild {
       $query = "SELECT `id`
                 FROM `glpi_plugin_openvas_items`
                 WHERE `openvas_date_last_scan` < DATE_ADD(CURDATE(),
-                   INTERVAL -".$config->fields['retention_delay']." DAY)";
+                   INTERVAL -".$config->fields['retention_delay'] ?? ''." DAY)";
       foreach ($DB->request($query) as $target) {
          $tmp = ['id'               => $target['id'],
                  'openvas_threat'   => null,
@@ -674,7 +674,7 @@ class PluginOpenvasItem extends CommonDBChild {
       $query = "SELECT `id`
                 FROM `glpi_plugin_openvas_vulnerabilities_items`
                 WHERE `creation_time` < DATE_ADD(CURDATE(),
-                   INTERVAL -".$config->fields['retention_delay']." DAY)";
+                   INTERVAL -".$config->fields['retention_delay'] ?? ''." DAY)";
       foreach ($DB->request($query, '', true) as $target) {
          $vuln_item->delete($target);
          $index++;

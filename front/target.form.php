@@ -40,10 +40,10 @@ if (isset($_GET['_in_modal'])) {
 } else if (isset($_POST['add'])) {
    $item = new $_POST['item']();
    $item->getFromDB($_POST['add_items_id']);
-   $_POST['name'] = $item->fields['name'];
+   $_POST['name'] = $item->fields['name'] ?? '';
    $ip            = new IPAddress();
    if ($ip->getFromDBByCrit(['mainitems_id' => $item->getID(), 'mainitemtype' => $_POST['item']])) {
-      $_POST['host'] = $ip->fields['name'];
+      $_POST['host'] = $ip->fields['name'] ?? '';
       if (PluginOpenvasOmp::addTarget($_POST)) {
          Session::addMessageAfterRedirect(__('Target created', 'openvas'), true);
          Html::redirect($_SERVER['HTTP_REFERER']);
