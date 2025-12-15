@@ -82,7 +82,7 @@ class PluginOpenvasItem extends CommonDBChild {
    * @param $tabnum          (default 1)
    * @param $withtemplate    (default 0)
    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
+   public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0): bool {
       $ovitem = new self();
       $ovitem->getFromDBForItem($item->getType(), $item->getID());
 
